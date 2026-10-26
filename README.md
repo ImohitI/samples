@@ -26,3 +26,7 @@ The Jenkins job itself is created by `sast-platform/jenkins` (configuration as c
 os-sast scan . --repo samples --build 1 --commit "$(git rev-parse --short HEAD)" --out result.json
 os-sast eval result.json expected.json
 ```
+
+## License
+
+[Apache-2.0](LICENSE)
