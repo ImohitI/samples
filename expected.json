@@ -1,0 +1,32 @@
+{
+  "description": "Ground truth for os-sast eval. isVulnerable=true: a planted bug a scanner should find. isVulnerable=false: bait that looks risky but is safe; flagging it is a false positive. line = the sink line.",
+  "entries": [
+    { "file": "python/app.py", "line": 20, "cwe": "CWE-89", "isVulnerable": true,  "note": "f-string SQL with request arg" },
+    { "file": "python/app.py", "line": 27, "cwe": "CWE-89", "isVulnerable": false, "note": "parameterized query" },
+    { "file": "python/app.py", "line": 34, "cwe": "CWE-78", "isVulnerable": true,  "note": "shell=True with request arg" },
+    { "file": "python/app.py", "line": 41, "cwe": "CWE-78", "isVulnerable": false, "note": "argument list, no shell, '--' guard" },
+    { "file": "python/app.py", "line": 48, "cwe": "CWE-22", "isVulnerable": true,  "note": "os.path.join with request arg into send_file" },
+    { "file": "python/app.py", "line": 57, "cwe": "CWE-22", "isVulnerable": false, "note": "basename + realpath prefix check" },
+
+    { "file": "java/src/main/java/dev/samples/UserServlet.java", "line": 43, "cwe": "CWE-89", "isVulnerable": true,  "note": "string-concatenated SQL in Statement.executeQuery" },
+    { "file": "java/src/main/java/dev/samples/UserServlet.java", "line": 57, "cwe": "CWE-89", "isVulnerable": false, "note": "PreparedStatement with bind parameter" },
+    { "file": "java/src/main/java/dev/samples/UserServlet.java", "line": 68, "cwe": "CWE-22", "isVulnerable": true,  "note": "request parameter as File child path" },
+    { "file": "java/src/main/java/dev/samples/UserServlet.java", "line": 74, "cwe": "CWE-78", "isVulnerable": true,  "note": "request parameter concatenated into Runtime.exec" },
+
+    { "file": "kotlin/src/main/kotlin/dev/samples/OrderRepository.kt", "line": 10, "cwe": "CWE-89", "isVulnerable": true,  "note": "string-concatenated SQL" },
+    { "file": "kotlin/src/main/kotlin/dev/samples/OrderRepository.kt", "line": 19, "cwe": "CWE-89", "isVulnerable": false, "note": "prepareStatement with bind parameter" },
+    { "file": "kotlin/src/main/kotlin/dev/samples/OrderRepository.kt", "line": 26, "cwe": "CWE-328", "isVulnerable": true, "note": "MD5 used as a checksum" },
+
+    { "file": "php/index.php", "line": 9,  "cwe": "CWE-89", "isVulnerable": true,  "note": "$_GET concatenated into mysqli_query" },
+    { "file": "php/index.php", "line": 16, "cwe": "CWE-89", "isVulnerable": false, "note": "mysqli_prepare with bound int" },
+    { "file": "php/index.php", "line": 22, "cwe": "CWE-79", "isVulnerable": true,  "note": "$_GET echoed into HTML" },
+    { "file": "php/index.php", "line": 26, "cwe": "CWE-79", "isVulnerable": false, "note": "htmlspecialchars before echo" },
+    { "file": "php/index.php", "line": 30, "cwe": "CWE-78", "isVulnerable": true,  "note": "$_GET concatenated into system()" },
+
+    { "file": "js/server.js", "line": 9,  "cwe": "CWE-79", "isVulnerable": true,  "note": "query param concatenated into HTML response" },
+    { "file": "js/server.js", "line": 13, "cwe": "CWE-78", "isVulnerable": true,  "note": "query param concatenated into exec" },
+    { "file": "js/server.js", "line": 19, "cwe": "CWE-78", "isVulnerable": false, "note": "execFile with argument array" },
+    { "file": "js/server.js", "line": 25, "cwe": "CWE-22", "isVulnerable": true,  "note": "query param joined into sendFile path" },
+    { "file": "js/server.js", "line": 29, "cwe": "CWE-22", "isVulnerable": false, "note": "basename + root option" }
+  ]
+}
