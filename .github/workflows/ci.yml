@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ground-truth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # expected.json goes stale silently when code moves. Every entry must point at an existing
+      # file and a non-blank line; os-sast eval is only as good as this file.
+      - name: Check expected.json against the code
+        run: |
+          python3 - <<'PY'
+          import json, os, re, sys
+          entries = json.load(open("expected.json"))["entries"]
+          errors = []
+          for e in entries:
+              where = f"{e['file']}:{e['line']}"
+              if not re.fullmatch(r"CWE-\d+", e["cwe"]):
+                  errors.append(f"{where} bad cwe {e['cwe']!r}")
+              if not isinstance(e["isVulnerable"], bool):
+                  errors.append(f"{where} isVulnerable must be true/false")
+              if not os.path.isfile(e["file"]):
+                  errors.append(f"{where} file not found")
+                  continue
+              lines = open(e["file"], encoding="utf-8").read().splitlines()
+              if not 1 <= e["line"] <= len(lines) or not lines[e["line"] - 1].strip():
+                  errors.append(f"{where} line missing or blank")
+          bugs = sum(e["isVulnerable"] for e in entries)
+          print(f"{len(entries)} entries: {bugs} planted bugs, {len(entries) - bugs} bait")
+          print("\n".join(errors) or "all entries point at code")
+          sys.exit(1 if errors else 0)
+          PY

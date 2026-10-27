@@ -2,6 +2,9 @@
 
 Small, deliberately vulnerable code for the SAST pipeline POC. **Never deploy any of this.**
 
+> Part of a SAST pipeline built from open-source parts: **samples** (vulnerable code + ground truth) → [os-sast](https://github.com/ImohitI/os-sast) (scanner CLI) → [sast-platform](https://github.com/ImohitI/sast-platform) (ingest API, Kafka, consumer, Jenkins) → [sast-dashboard](https://github.com/ImohitI/sast-dashboard) (dashboard API + UI).  
+> Design decisions: [DESIGN.md](https://github.com/ImohitI/sast-platform/blob/main/docs/DESIGN.md) · one scan followed end to end: [WALKTHROUGH.md](https://github.com/ImohitI/sast-platform/blob/main/docs/WALKTHROUGH.md)
+
 Each language folder has planted bugs **and** bait: code that looks risky but is safe. [`expected.json`](expected.json) is the ground truth (file, sink line, CWE, `isVulnerable`), so `os-sast eval` can compute precision and recall.
 
 | Folder | Planted bugs | Bait (safe) |
